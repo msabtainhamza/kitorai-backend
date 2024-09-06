@@ -182,19 +182,19 @@ const getFacebookInsights = async (req, res) => {
       age_range: countryData ? countryData.values[0].value : "Not Provided",
     };
 
-    Facebook.followers = followers_count;
-    Facebook.following = friends_count;
-    Facebook.shares = posts.data.reduce(
+    userInsights.followers = followers_count;
+    userInsights.following = friends_count;
+    userInsights.shares = posts.data.reduce(
       (total, post) => total + (post.shares ? post.shares.count : 0),
       0
     );
-    Facebook.recentPosts = posts.data.map((post) => ({
+    userInsights.recentPosts = posts.data.map((post) => ({
       message: post.message,
       createdTime: new Date(post.created_time),
     }));
-    Facebook.monthlyGrowth = monthlyGrowth;
-    Facebook.yearlyGrowth = yearlyGrowth;
-    Facebook.demographicInfo = demographicInfo;
+    userInsights.monthlyGrowth = monthlyGrowth;
+    userInsights.yearlyGrowth = yearlyGrowth;
+    userInsights.demographicInfo = demographicInfo;
 
     // Saving the Facebook Insights
     await Facebook.save();
